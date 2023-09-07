@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="250dp"
+    android:layout_height="wrap_content"
+    android:background="@color/todo_background_todo_app"
+    android:orientation="vertical"
+    android:padding="16dp">
+
+    <EditText
+        android:id="@+id/dialogEditText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:backgroundTint="@color/white"
+        android:hint="Añade la tarea"
+        android:textColor="@color/white"
+        android:textColorHint="@color/white" />
+
+    <RadioGroup
+        android:id="@+id/dialogRadioGroup"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <RadioButton
+            android:id="@+id/rbNegocios"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:checked="true"
+            android:text="Negocios"
+            android:textColor="@color/white"
+            />
+
+        <RadioButton
+            android:id="@+id/rbPersonal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Personal"
+            android:textColor="@color/white" />
+
+        <RadioButton
+            android:id="@+id/rbOtros"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Otros"
+            android:textColor="@color/white" />
+    </RadioGroup>
+    <Button
+        android:id="@+id/dialogBtnAddTask"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Tarea"
+        android:backgroundTint="@color/todo_accent"
+        />
+</androidx.appcompat.widget.LinearLayoutCompat>
