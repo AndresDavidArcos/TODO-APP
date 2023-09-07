@@ -23,7 +23,7 @@ class MainMenuActivity : AppCompatActivity() {
     private lateinit var tasksAdapter: TasksAdapter
     private lateinit var rvTask: RecyclerView
     private  var previousSelectedCategory: TaskCategory? = null
-    private var tasks = ArrayList<Task>()
+    private var tasks = LinkedHashMap<Int, Task>()
 
     fun initVars(){
         rvCategories = findViewById(R.id.rvCategories)
@@ -38,7 +38,6 @@ class MainMenuActivity : AppCompatActivity() {
         addTaskBtn()
         dialog()
         tasks()
-//      filterTasksByCategory()
     }
 
     private fun categorySelected(position:Int) {
@@ -71,9 +70,9 @@ class MainMenuActivity : AppCompatActivity() {
     }
 
     private fun filterTasksByCategory(categorie: TaskCategory) {
-        val filteredTasks = tasks.filter { task ->
+        val filteredTasks = tasks.filterValues { task ->
             task.category.equals(categorie)
-        } as ArrayList<Task>
+        } as LinkedHashMap<Int, Task>
 
         tasksAdapter.tasks = filteredTasks
         tasksAdapter.notifyDataSetChanged()
@@ -87,15 +86,15 @@ class MainMenuActivity : AppCompatActivity() {
     }
 
     fun tasks(){
-        tasksAdapter = TasksAdapter(tasks) { position -> taskChecked(position) }
+        tasksAdapter = TasksAdapter(tasks) { id -> taskChecked(id) }
         rvTask.layoutManager = LinearLayoutManager(this)
         rvTask.adapter = tasksAdapter
     }
 
-    private fun taskChecked(position: Int) {
-        val task = tasks[position]
-        task.isChecked = !task.isChecked
-        Log.i("TASKSCHECKED", "la task $position tiene el checked en ${task.isChecked}")
+    private fun taskChecked(id: Int) {
+        val task = tasks[id]
+        task!!.isChecked = !task.isChecked
+        Log.i("TASKSCHECKED", "la task $id tiene el checked en ${task.isChecked}")
         tasksAdapter.notifyDataSetChanged()
     }
 
@@ -115,7 +114,7 @@ class MainMenuActivity : AppCompatActivity() {
         btnAddTask.setOnClickListener{
             val taskCat = TaskCategory.identifyCategory(dialog.findViewById<RadioButton>(radioGroup.checkedRadioButtonId).text.toString())
             val taskDesc = editText.text.toString()
-            tasks.add(Task(taskDesc, taskCat, false))
+            tasks.put(Task.idCounter,(Task(taskDesc, taskCat, false)))
             tasksAdapter.notifyDataSetChanged()
             editText.text.clear()
             dialog.hide()
